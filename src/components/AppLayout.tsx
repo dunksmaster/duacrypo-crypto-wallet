@@ -49,9 +49,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
         </aside>
-        <main className="flex-1 p-6 lg:p-10">
-          <Outlet />
-        </main>
+        <main className="flex-1 p-6 lg:p-10">{children}</main>
       </div>
     </div>
   );
