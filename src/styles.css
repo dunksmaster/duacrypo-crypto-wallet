@@ -62,8 +62,11 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --radius: 0.875rem;
+  --background: oklch(0.08 0.02 270);
+  --gradient-primary: linear-gradient(135deg, oklch(0.7 0.22 145), oklch(0.78 0.18 195));
+  --gradient-surface: linear-gradient(160deg, oklch(0.18 0.04 270), oklch(0.12 0.03 280));
+  --shadow-glow: 0 20px 60px -20px oklch(0.7 0.22 145 / 0.4);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
