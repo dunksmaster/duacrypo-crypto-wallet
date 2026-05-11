@@ -10,7 +10,7 @@ const nav = [
   { to: "/settings", label: "Settings", icon: Settings },
 ] as const;
 
-export function AppLayout() {
+export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
