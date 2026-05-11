@@ -1,77 +1,113 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AppLayout } from "@/components/AppLayout";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { assets, formatUsd, totalBalance } from "@/lib/wallet-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Wallet — duacrypo" },
-      { name: "description", content: "Your crypto portfolio at a glance." },
+      { title: "Dua Crypto — Investime në Kriptomonedha" },
+      {
+        name: "description",
+        content:
+          "Strategji, këshilla dhe burime për të investuar në kriptomonedha në Shqipëri.",
+      },
+      { property: "og:title", content: "Dua Crypto — Investime në Kriptomonedha" },
+      {
+        property: "og:description",
+        content:
+          "Strategji, këshilla dhe burime për të investuar në kriptomonedha në Shqipëri.",
+      },
     ],
   }),
-  component: WalletPage,
+  component: HomePage,
 });
 
-function WalletPage() {
-  const total = totalBalance();
-  return (
-    <AppLayout>
-      <div className="mx-auto max-w-3xl space-y-8">
-        <section
-          className="rounded-3xl p-8"
-          style={{ background: "var(--gradient-surface)", boxShadow: "var(--shadow-card)" }}
-        >
-          <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Total balance
-          </p>
-          <h1 className="mt-2 text-5xl font-semibold tracking-tight">{formatUsd(total)}</h1>
-          <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-primary/15 px-3 py-1 text-sm font-medium text-primary">
-            <ArrowUpRight className="h-3.5 w-3.5" /> +1.84% today
-          </div>
-        </section>
+type LinkRow = { icon: string; label: string; href: string };
 
-        <section>
-          <h2 className="mb-4 text-lg font-semibold">Assets</h2>
-          <ul className="space-y-2">
-            {assets.map((a) => {
-              const value = a.balance * a.priceUsd;
-              const positive = a.change24h >= 0;
-              return (
-                <li
-                  key={a.symbol}
-                  className="flex items-center justify-between rounded-2xl border border-border bg-card p-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="grid h-11 w-11 place-items-center rounded-full bg-secondary text-sm font-semibold">
-                      {a.symbol.slice(0, 3)}
+const links: LinkRow[] = [
+  { icon: "ℹ️", label: "Çfarë është Duacrypto?", href: "#" },
+  { icon: "📊", label: "BitGet në Shqipëri", href: "#" },
+  { icon: "💼", label: "Portofoli nga Dua Crypto", href: "#" },
+  { icon: "📞", label: "DuaCrypto Seanca Këshillimi (60 min)", href: "#" },
+  { icon: "💱", label: "Duhet të shes fitimet për të tërhequr?", href: "#" },
+  { icon: "✅", label: "Mbështet Rrugëtimin Tonë në Kripto", href: "#" },
+  { icon: "🚩", label: "1. Si të investoni në Bitcoin nga Shqipëria?", href: "#" },
+  { icon: "❗", label: "Kujdes", href: "#" },
+  { icon: "📄", label: "Stake.com", href: "#" },
+  { icon: "📘", label: "Dokumenti i Bardhë i Bitcoin", href: "#" },
+  { icon: "🥧", label: "Pi Network", href: "#" },
+];
+
+const priceHistory = [
+  { year: "2009", text: "Në vitin 2009 Bitcoin u krijua; nuk kishte treg të zhvilluar — vlera", price: "$0.1" },
+  { year: "2015", text: "Rreth", price: "$504", suffix: "(pika më e lartë e regjistruar gjatë vitit)" },
+  { year: "2017", text: "Afërsisht", price: "$19,700", suffix: "(ATH gjatë përfundimit të vitit)" },
+  { year: "2021", text: "Afërsisht", price: "$69,000", suffix: "(rekord historik në nëntor 2021)" },
+  {
+    year: "2025",
+    text: "Parashikim spekulativ: rreth",
+    price: "$108,000",
+    suffix: "(vlera e parashikuar $155,950)",
+  },
+];
+
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="border-b border-border bg-black py-10">
+        <h1 className="text-center font-mono text-4xl font-bold tracking-[0.2em] text-primary md:text-6xl">
+          DUA CRYPTO
+        </h1>
+      </header>
+
+      <main className="mx-auto max-w-3xl px-6 py-10">
+        <article>
+          <h2 className="mb-6 text-3xl font-bold leading-tight md:text-4xl">
+            Investime në Kriptomonedha: Strategji dhe Këshilla
+          </h2>
+
+          <section className="rounded-lg border border-border bg-card p-5 md:p-6">
+            <div className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-3 text-sm md:text-base">
+              <div className="flex flex-col gap-3">
+                <span aria-hidden className="text-2xl">🟢</span>
+                <span aria-hidden className="text-2xl">🟠</span>
+                <span aria-hidden className="text-2xl">🔷</span>
+                <span aria-hidden className="text-2xl">🟡</span>
+                <span aria-hidden className="text-2xl">🟣</span>
+              </div>
+              <ul className="space-y-3">
+                {priceHistory.map((row) => (
+                  <li key={row.year}>
+                    <div className="font-semibold text-destructive">{row.year}</div>
+                    <div className="text-foreground/90">
+                      {row.text}{" "}
+                      <span className="font-semibold text-primary">{row.price}</span>
+                      {row.suffix ? <span> {row.suffix}</span> : null}
                     </div>
-                    <div>
-                      <p className="font-medium">{a.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {a.balance} {a.symbol}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold">{formatUsd(value)}</p>
-                    <p
-                      className={`inline-flex items-center gap-0.5 text-sm ${positive ? "text-primary" : "text-destructive"}`}
-                    >
-                      {positive ? (
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      ) : (
-                        <ArrowDownRight className="h-3.5 w-3.5" />
-                      )}
-                      {Math.abs(a.change24h).toFixed(2)}%
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      </div>
-    </AppLayout>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <nav className="mt-8 divide-y divide-border border-y border-border">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="flex items-center gap-3 py-3 text-base text-accent hover:text-primary hover:underline"
+              >
+                <span aria-hidden className="text-lg">
+                  {l.icon}
+                </span>
+                <span>{l.label}</span>
+              </a>
+            ))}
+          </nav>
+        </article>
+      </main>
+
+      <footer className="py-8 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} Dua Crypto
+      </footer>
+    </div>
   );
 }
