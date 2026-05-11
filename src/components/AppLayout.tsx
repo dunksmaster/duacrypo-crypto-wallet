@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Wallet, Send, Download, History, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
